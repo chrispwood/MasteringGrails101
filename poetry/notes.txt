@@ -1,0 +1,57 @@
+Under the covers, grails is a SpringMVC application
+
+grails is built on the spring framework.  Cannot be built on another framework.
+Spring isn't going to leak through any of the abstractions.  
+Persistence is based on Hibernate -> skilled users of hibernate are much happier with GORM.
+	GORM = Grails Object Relational Mapper
+Uses SiteMesh for its page decoration framework.
+
+To create a domain controller:
+create-domain-class com.oreilly.Poet
+- packages this as java style.  Can find it in grails-app/domain...
+- not a whole lot in there initially, a skeleton class
+
+Scaffolding provides CRUD for building applications:
+1.  create-controller <domain classname>
+
+Default scaffolding sets the order and makes the key link on the view whatever was first - in our poetry example, death date was the key but was blank
+
+DB:
+1.  by default, grails comes with the h2 database
+2.  by default, grails runs in memory mode
+	- so that you can start out trying things out without worrying about schema migration
+
+
+configuration happens in grails-app/conf
+...let's reconfigure gorm to look into mysql
+
+generate-all - fills your object with code
+
+Grails is a request-based framework.  Data comes in in an http request, gets delegated to some code, does stuff, returns html.  Nothing new.  A very thin layer, nothing very abstract.  The general problem in the http framework is associating a URI request with code - don't want a huge switch statement.
+
+consider a url - http://localhost:8080/poetry/poem/show/1
+	- poem: the word poem identifies the controller.  Poem maps to controller directory object which starts with Poem and ends with word Controller:
+		PoemController
+		(convention over configuration)
+	- show: a method.  Show is part of the default REST-based method listing.
+
+Controllers are classes that process requests.  Classes mapped by convention from the URL.
+- they perform actions in the class which are methods that do the work
+- in previous versions of grails, the actions were closures but now they are just actions
+	- this is beneficial.  Consider the case when the you are collecting a name and email
+	- handles the form mapping with method params like SpringMVC
+- you can still override the conventions
+
+i18n built-in to the application with message.properties
+
+Wrapping Up: 
+Favorite request based convention over configuration platform
+Most people approaching grails have no groovy
+It's a huge framework - refer to the documentation early and often
+
+When to use grails over java?  
+- Use grails for teams of the jvm 
+- When you have a java team, go grails, especially because it helps you bring new folks on who don't know java as well
+
+Web Frameworks are a gateway drug - if you want a language to take off, provide a killer web app support framework, as proven with Ruby/Rails and Groovy/Grails.
+Grails has tried to take the best of Rails.  No shame in that.  They are independent products but grails has tried to follow in the spirit of the rails convention-over-configuration scaffolding model.
